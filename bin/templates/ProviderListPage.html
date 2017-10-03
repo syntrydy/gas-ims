@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader" />
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+
+
+
+
+			<div class="page-title"
+				th:text="#{homeMenuText}+' > '+Administration+' > '+providers"></div>
+			<div>
+				<div class="card">
+					<h3 class="card-title">All providers</h3>
+					<a th:href="@{/provider}">
+						<button type="button"
+							class="btn btn-success bmd-btn-fab active pull-right">
+							<i class="fa fa-plus" th:text="#{ButtonAddText}">&nbsp;Add</i>
+						</button>
+					</a>
+					<table class="table table-inverse table-hover" id="providerTable">
+						<thead>
+							<tr>
+								<th>Full Name</th>
+								<th>Email</th>
+								<th>Phone</th>
+								<th>Address</th>
+								<th>Enable</th>
+								<th>View</th>
+								<th>Edit</th>
+								<th>Delete</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="p : ${providers}">
+								<td th:text="${p.fullName}"></td>
+								<td th:text="${p.email}"></td>
+								<td th:text="${p.phone}"></td>
+								<td th:text="${p.address}"></td>
+								<td th:text="${p.enable}"></td>
+								<td style="width: 50px;"><p data-placement="top"
+										title="Details">
+										<a th:href="@{/provider/{id}(id=${p.id})}"><button
+												class="btn btn-primary btn-s" data-id="${p.id}">
+												<span class="fa fa-eye"></span>
+											</button></a>
+									</p></td>
+								<td style="width: 50px;"><p title="Edit">
+												<a th:href="@{/eprovider/{id}(id=${p.id})}"><button
+														class="btn btn-primary btn-s">
+														<span class="fa fa-pencil"></span>
+													</button></a>
+											</p></td>
+								<td style="width: 50px;"><p data-placement="top"
+										data-toggle="tooltip" title="Delete">
+										<button id="deleteProviderFromList"
+											class="btn btn-danger btn-s deleteProviderFromList"
+											data-title="Delete" data-toggle="modal" data-target="#delete"
+											th:attr="data-id=${p.id}">
+											<span class="fa  fa-trash"></span>
+										</button>
+									</p></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+
+			<!-- update modal -->
+			<div class="modal fade" id="edit" tabindex="-1" role="dialog"
+				aria-labelledby="edit" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">
+								<span class="fa fa-times" aria-hidden="true"></span>
+							</button>
+							<h4 class="modal-title custom_align" id="Heading">Edit
+								provider</h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<input class="form-control " type="text" placeholder="name"></input>
+							</div>
+							<div class="form-group">
+
+								<input class="form-control " type="text"
+									placeholder="description"></input>
+							</div>
+						</div>
+						<div class="modal-footer ">
+							<button type="button" class="btn btn-primary btn-lg"
+								style="width: 100%;">
+								<span class="fa fa-save"></span> Update
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- delete modal -->
+			<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+				aria-labelledby="edit" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-body">
+							<input type="hidden" name="modalProviderId" id="modalProviderId"
+								value="" />
+						</div>
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">
+								<span class="fa fa-times" aria-hidden="true"></span>
+							</button>
+							<h4 class="modal-title custom_align" id="Heading"
+								th:text="#{DeleteRoleText}">Delete provider</h4>
+						</div>
+						<div class="modal-body">
+
+							<div class="alert alert-danger">
+								<span class="glyphicon glyphicon-warning-sign"></span>
+								<p th:text="#{DeleteRoleWarnningMessage}"></p>
+							</div>
+
+						</div>
+						<div class="modal-footer ">
+							<button type="button" class="btn btn-primary deleteProvider">
+								<span class="fa fa-check"></span> 
+								<p th:text="#{yesText}"></p>
+							</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">
+								<span class="fa fa-times"></span> 
+								<p th:text="#{noText}"></p>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+	</div>
+</body>
+<footer th:replace="master :: app_footer"></footer>
+<script type="text/javascript" src="js/plugins/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="js/plugins/sweetalert.min.js"></script>
+<script type="text/javascript">
+	var getUrl = window.location;
+	var url = getUrl.protocol + "//" + getUrl.host;
+	$(".deleteProviderFromList").click(function() {
+		$("#modalProviderId").val($(this).attr("data-id"))
+	});
+	$(".deleteProvider").click(function() {
+		event.preventDefault();
+		deleteProvider();
+	});
+	$('#providerTable').DataTable();
+</script>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader" />
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+
+			<div class="page-title"
+				th:text="#{homeMenuText}+' > '+#{rolesMenuText}"></div>
+			<div>
+
+				<div class="col-md-8">
+					<div class="card">
+						<h3 class="card-title">Add store</h3>
+						<hr></hr>
+						<div class="card-body">
+							<form name="f" th:object="${store}" method="post"
+								th:action="@{/store}">
+								<div class="form-group">
+									<input type="hidden" th:field="*{id}"></input> <label
+										class="control-label">Name</label> <input class="form-control"
+										type="text" placeholder="Enter store name" th:field="*{name}"></input>
+								</div>
+								<div class="form-group">
+									<label class="control-label">Pick a store keeper</label>
+									<select class="form-control" id="demoSelect" th:field="*{storekeeper}">
+										<optgroup label="Select a keeper">
+											<option th:each="user : ${users}" th:value="${user.id}"
+											th:text="${user.fullName}"></option>
+
+										</optgroup>
+									</select>
+								</div>
+								<div class="form-group">
+								<label class="control-label">Pick a shop</label>
+									<select class="form-control" id="demoSelect" th:field="*{shop}">
+										<optgroup label="Select shop">
+											<option th:each="shop : ${shops}" th:value="${shop.id}"
+											th:text="${shop.name}"></option>
+										</optgroup>
+									</select>
+								</div>
+								<div class="card-footer">
+									<div class="row">
+										<div class="col-md-8 col-md-offset-3">
+											<button class="btn btn-primary icon-btn" type="submit"
+												th:text="#{ButtonRegisterText}">
+												<i class="fa fa-fw fa-lg fa-check-circle"></i>
+											</button>
+											&nbsp;&nbsp;&nbsp;<a th:text="#{ButtonCancelText}"
+												class="btn btn-default icon-btn"
+												href="javascript:window.history.back();"><i
+												class="fa fa-fw fa-lg fa-times-circle"></i></a>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		
+	</script>
+</body>
+<footer th:replace="master :: app_footer"></footer>
+</html>

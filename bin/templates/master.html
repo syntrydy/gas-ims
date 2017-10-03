@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head lang="en" th:fragment="app_firstheader">
+<meta charset="utf-8"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<!-- CSS-->
+<link rel="stylesheet" type="text/css" href="../css/main.css"
+	th:href="@{../css/main.css}"></link>
+<link rel="stylesheet" type="text/css"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+<title>IMS</title>
+<link rel="stylesheet" type="text/css" href="../css/app.css"
+	th:href="@{../css/app.css}"></link>
+<link rel="stylesheet" type="text/css"
+	href="../bootstrap-datetimepicker.min.css"
+	th:href="@{../css/bootstrap-datetimepicker.min.css}"></link>
+<link rel='icon' href='../images/favicon.png' type='image/x-icon'
+	th:href="@{../images/favicon.png}"></link>
+</head>
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<!-- Navbar-->
+		<header class="main-header hidden-print"
+			th:fragment="app_secondheader">
+			<a class="logo" href="/home">IMS</a>
+			<nav class="navbar navbar-static-top">
+				<!-- Sidebar toggle button-->
+				<a class="sidebar-toggle" href="#" data-toggle="offcanvas"></a>
+				<!-- Navbar Right Menu-->
+				<div class="navbar-custom-menu">
+					<ul class="top-nav">
+					</ul>
+				</div>
+			</nav>
+		</header>
+		<!-- Side-Nav-->
+		<aside class="main-sidebar hidden-print" th:fragment="app_aside">
+			<section class="sidebar">
+				<div class="user-panel">
+					<div class="pull-left image">
+						<img class="img-circle" src="../images/user.png" alt="User Image"></img>
+					</div>
+					<div class="pull-left info">
+						<p th:text="${username}"></p>
+						<p class="designation">Software developer</p>
+					</div>
+				</div>
+				<!-- Sidebar Menu-->
+				<ul class="sidebar-menu">
+					<li class="active"><a href="/home"><i
+							class="fa fa-dashboard"></i><span th:text="#{homeMenuText}">Dashboard</span></a></li>
+					<li sec:authorize="hasRole('ADMIN')" class="treeview"><a
+						href="#"><i class="fa fa-bank"></i><span>Administration</span><i
+							class="fa fa-angle-right"></i></a>
+						<ul class="treeview-menu">
+							<li><a href="/users"><i class="fa fa-users"></i>Users</a></li>
+							<li><a href="/roles"><i class="fa fa-user-circle"></i>Roles</a></li>
+							<li><a href="/providers"><i class="fa fa-handshake-o"></i>Providers</a></li>
+							<li><a href="/customers"><i class="fa fa-blind"></i>Customers</a></li>
+							<li><a href="/stores"><i class="fa fa-archive"></i>Stores</a></li>
+							<li><a href="/pofsales"><i class="fa fa-shopping-basket"></i>Point
+									of sales</a></li>
+							<li><a href="/currencies"><i class="fa fa-money"></i>Currencies</a></li>
+						</ul></li>
+					<li sec:authorize="hasRole('ADMIN')" class="treeview"><a
+						href="#"><i class="fa fa-shopping-bag"></i><span>Shop</span><i
+							class="fa fa-angle-right"></i></a>
+						<ul class="treeview-menu">
+							<li><a href="/categories"><i class="fa fa-sitemap"></i>Categories</a></li>
+							<li><a href="/items"><i class="fa fa-cubes"></i>Items</a></li>
+						</ul></li>
+					<li class="treeview"><a href="#"><i class="fa fa-cubes"></i><span>Stocks</span><i
+							class="fa fa-angle-right"></i></a>
+						<ul class="treeview-menu">
+							<li class="treeview"><a href="#"><i class="fa fa-share"></i><span>Purchases</span><i
+									class="fa fa-angle-right"></i></a>
+								<ul class="treeview-menu">
+									<li><a href="/purchase"><i class="fa fa-plus"></i>Add
+											purchase</a></li>
+									<li><a href="/purchases"><i class="fa fa-list"></i><span>
+												List</span></a></li>
+								</ul></li>
+							<li class="treeview"><a href="#"><i
+									class="fa fa-exchange"></i><span>Movements</span><i
+									class="fa fa-angle-right"></i></a>
+								<ul class="treeview-menu">
+									<li><a href="/movement"><i class="fa fa-arrows-h"></i>New
+											movement</a></li>
+									<li><a href="/movements"><i class="fa fa-exchange"></i><span>
+												Movements</span></a></li>
+								</ul></li>
+						</ul></li>
+					<li class="treeview"><a href="#"><i
+							class="fa fa-shopping-basket"></i><span>Point of Sales</span><i
+							class="fa fa-angle-right"></i></a>
+						<ul class="treeview-menu">
+							<li><a href="/sale"><i class="fa fa-cart-plus"></i>New
+									sale</a></li>
+							<li><a href="/sales"><i class="fa fa-list"></i>All sales</a></li>
+						</ul></li>
+					<li class="treeview"><a href="#"><i
+							class="fa fa-credit-card-alt"></i><span>Checkout</span><i
+							class="fa fa-angle-right"></i></a>
+						<ul class="treeview-menu">
+							<li><a href="/salepayment"><i class="fa fa-cart-plus"></i>New
+									Payment</a></li>
+							<li><a href="/salepayments"><i class="fa fa-list"></i>Payments</a></li>
+						</ul></li>
+					<li class="treeview"><a href="#"><i class="fa fa-signal"></i><span>Reports</span><i
+							class="fa fa-angle-right"></i></a>
+						<ul class="treeview-menu">
+
+
+						</ul></li>
+					<li class="treeview"><a href="/"><i class="fa fa-sign-out"></i><span
+							th:text="#{signOutMenuText}">Logout</span></a></li>
+				</ul>
+			</section>
+		</aside>
+
+
+		<br></br> <br></br> <br></br> <br></br> <br></br> <br></br>
+		<div sec:authorize="hasRole('ADMIN')">This will only be
+			displayed if authenticated user has role ADMIN.</div>
+	</div>
+
+	<footer class="page-footer myfooter back" th:fragment="app_footer">
+		<!-- Java scripts-->
+		<script src="../js/jquery-2.1.4.min.js"
+			th:src="@{../js/jquery-2.1.4.min.js}"></script>
+		<script src="../js/bootstrap.min.js"
+			th:src="@{../js/bootstrap.min.js}"></script>
+		<script src="../js/plugins/pace.min.js"
+			th:src="@{../js/plugins/pace.min.js}"></script>
+		<script src="../js/main.js" th:src="@{../js/main.js}"></script>
+		<script src="../js/app.js" th:src="@{../js/app.js}"></script>
+		<script src="../js/shop.js" th:src="@{../js/shop.js}"></script>
+		<script src="../js/purchase.js" th:src="@{../js/purchase.js}"></script>
+		<script src="../js/movement.js" th:src="@{../js/movement.js}"></script>
+		<script src="../js/sale.js" th:src="@{../js/sale.js}"></script>
+		<script src="../js/plugins/jquery.dataTables.min.js"></script>
+		<script src="../js/plugins/dataTables.bootstrap.min.js"></script>
+		<script
+			src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+	</footer>
+</body>
+</html>

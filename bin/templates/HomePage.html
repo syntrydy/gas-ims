@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader" />
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+
+			<div class="page-title" th:text="#{homeMenuText}">
+				<b>dddddddd</b>
+			</div>
+			<div>
+				<!-- first row -->
+				<div class="row">
+					<div class="col-md-6">
+						<div class="card">
+							<h3 class="card-title">Today Sales</h3>
+							<div class="card-body">Hey there, I am a very simple card.
+								I am good at containing small bits of information. I am quite
+								convenient because I require little markup to use effectively.</div>
+							<div class="card-footer">
+								<a class="btn btn-primary" href="#">Link</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="card">
+							<h3 class="card-title">Today Payments</h3>
+							<div class="card-body">Hey there, I am a very simple card.
+								I am good at containing small bits of information. I am quite
+								convenient because I require little markup to use effectively.</div>
+							<div class="card-footer">
+								<a class="btn btn-primary" href="#">Link</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- second row -->
+				<div class="row">
+					<div class="col-md-6">
+						<div class="card">
+							<h3 class="card-title">Items Notifications</h3>
+							<div class="card-body">Hey there, I am a very simple card.
+								I am good at containing small bits of information. I am quite
+								convenient because I require little markup to use effectively.</div>
+							<div class="card-footer">
+								<a class="btn btn-primary" href="#">Link</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="card">
+							<h3 class="card-title">Card Title</h3>
+							<div class="card-body">Hey there, I am a very simple card.
+								I am good at containing small bits of information. I am quite
+								convenient because I require little markup to use effectively.</div>
+							<div class="card-footer">
+								<a class="btn btn-primary" href="#">Link</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+
+
+
+
+
+
+		</div>
+	</div>
+	<script type="text/javascript">
+		
+	</script>
+</body>
+<footer th:replace="master :: app_footer"></footer>
+</html>

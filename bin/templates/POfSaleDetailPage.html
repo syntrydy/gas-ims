@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader" />
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+
+
+			<div class="page-title">Details</div>
+			<div>
+				<div class="card">
+					<h3 class="card-title">Point of Sale details</h3>
+					<hr></hr>
+					&nbsp;&nbsp;&nbsp;<a
+						class="btn btn-primary icon-btn"
+						href="javascript:window.history.back();"><i
+						class="fa fa-arrow-left"></i>Back</a>
+					<form class="form-horizontal">
+						<div class="row card-body">
+
+							<div class="col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">Name :</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${pofsale.name}"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">Phone
+										number :</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${pofsale.phone}"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">Address
+										:</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${pofsale.address}"></label>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">Manager
+										:</label>
+									<div class="col-md-8 col-sm-6">
+										<b><label class="control-label col-md-8 col-sm-12"
+											th:text="${pofsale.manager.fullName}"></label></b>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">Currency
+										:</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${pofsale.currency.value}"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">Default
+										Customer :</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${pofsale.customer.fullName}"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">Sale
+										Strategy :</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${pofsale.saleStrategy}"></label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+							<hr></hr>
+					<!-- items measure-->
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Sales</h3>
+						</div>
+						<div class="panel-body">
+							<table class="table table-hover" id="salesTable">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Date</th>
+										<th>Amount</th>
+										<th>Detail</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="sale : ${pofsale.sales}">
+										<th scope="row" th:text="${sale.id}"></th>
+										<td th:text="${sale.date}"></td>
+										<td th:text="${sale.amount}"></td>
+										<td style="width: 50px;"><p data-placement="top"
+												title="Details">
+												<a th:href="@{/sale/{id}(id=${sale.id})}"><button
+														class="btn btn-primary btn-s" data-id="${sale.id}">
+														<span class="fa fa-eye"></span>
+													</button></a>
+											</p></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+
+
+
+		</div>
+	</div>
+</body>
+<footer th:replace="master :: app_footer"></footer>
+<script type="text/javascript">
+	$('#salesTable').DataTable();
+</script>
+</html>

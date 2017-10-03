@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader" />
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+
+
+			<div class="page-title">Details</div>
+			<div>
+				<div class="card">
+					<h3 class="card-title">Customer Details</h3>
+					<hr></hr>
+					&nbsp;&nbsp;&nbsp;<a 
+										class="btn btn-primary icon-btn"
+										href="javascript:window.history.back();"><i class="fa fa-arrow-left"></i>Back</a>
+					<form class="form-horizontal">
+						<div class="row card-body">
+
+							<div class="col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">Full
+										Name :</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${customer.fullName}"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">Email :</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${customer.email}"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">Address
+										:</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${customer.address}"></label>
+									</div>
+								</div>
+								
+							</div>
+							<div class="col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">Phone :</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${customer.phone}"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">Is
+										Trustable :</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${customer.trustable}"></label>
+									</div>
+								</div>
+							</div>
+							<hr></hr>
+							<div class="row">
+							</div>
+
+						</div>
+
+					</form>
+
+				</div>
+			</div>
+
+
+
+
+		</div>
+	</div>
+</body>
+<footer th:replace="master :: app_footer"></footer>
+</html>

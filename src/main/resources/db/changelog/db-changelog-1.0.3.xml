@@ -1,0 +1,73 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+	<changeSet id="AAM-11" author="gasmyr.mougang">
+		<createTable tableName="unitofmeasure">
+			<column autoIncrement="true" name="id" type="int8">
+				<constraints primaryKey="true" primaryKeyName="unitofmeasure_pkey"
+					nullable="false" />
+			</column>
+			<column name="name" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="quantity" type="int8" />
+			<column name="item_id" type="int8" />
+			<column name="version" type="int8" />
+		</createTable>
+		<insert tableName="unitofmeasure">
+			<column name="name" value="BASE" />
+			<column name="quantity" value="1" />
+			<column name="item_id"
+				valueComputed="(SELECT id FROM item WHERE name='IMS DefaultProduct')" />
+			<column name="version" value="0" />
+		</insert>
+	</changeSet>
+	<changeSet id="AAM-12" author="gasmyr.mougang">
+		<createTable tableName="purchase">
+			<column autoIncrement="true" name="id" type="int8">
+				<constraints primaryKey="true" primaryKeyName="purchase_pkey"
+					nullable="false" />
+			</column>
+			<column name="date" type="varchar(255)">
+			</column>
+			<column name="store_id" type="int8" />
+			<column name="provider_id" type="int8" />
+			<column name="version" type="int8" />
+		</createTable>
+		<insert tableName="purchase">
+			<column name="date" value="2017-09-12 14:20:12" />
+			<column name="provider_id" valueComputed="(SELECT id FROM _user WHERE username='admin')" />
+			<column name="store_id" valueComputed="(SELECT id FROM store WHERE name='IMS Store')" />
+			<column name="version" value="0" />
+		</insert>
+	</changeSet>
+	<changeSet id="AAM-13" author="gasmyr.mougang">
+		<createTable tableName="purchaseitem">
+			<column autoIncrement="true" name="id" type="int8">
+				<constraints primaryKey="true" primaryKeyName="purchaseitem_pkey"
+					nullable="false" />
+			</column>
+			<column name="quantity" type="int8" />
+			<column name="avquantity" type="int8" />
+			<column name="price" type="double" />
+			<column name="item_id" type="int8" />
+			<column name="purchase_id" type="int8" />
+			<column name="measure_id" type="int8" />
+			<column name="version" type="int8" />
+		</createTable>
+		<insert tableName="purchaseitem">
+			<column name="item_id"
+				valueComputed="(SELECT id FROM item WHERE name='IMS DefaultProduct')" />
+			<column name="measure_id"
+				valueComputed="(SELECT id FROM unitofmeasure WHERE name='BASE')" />
+			<column name="purchase_id"
+				valueComputed="(SELECT id FROM purchase WHERE date='2017-09-12 14:20:12')" />
+			<column name="quantity" value="10" />
+			<column name="avquantity" value="7" />
+			<column name="price" value="7500" />
+			<column name="version" value="0" />
+		</insert>
+	</changeSet>
+</databaseChangeLog>

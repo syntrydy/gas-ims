@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader" />
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+
+
+			<div class="page-title">Details</div>
+			<div>
+				<div class="card">
+					<h3 class="card-title">Item Detail</h3>
+					<hr></hr>
+					&nbsp;&nbsp;&nbsp;<a class="btn btn-primary icon-btn"
+						href="javascript:window.history.back();"><i
+						class="fa fa-arrow-left"></i>Back</a>
+					<form class="form-horizontal">
+						<div class="row card-body">
+							<div class="col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6"> Name :</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${item.name}"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">
+										Threshold :</label>
+									<div class="col-md-8 col-sm-6">
+										<b><label class="control-label col-md-8 col-sm-12"
+											th:text="${item.threshold}"></label></b>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">
+										Description :</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${item.description}"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">
+										Category :</label>
+									<div class="col-md-8 col-sm-6">
+										<b><label class="control-label col-md-8 col-sm-12"
+											th:text="${item.category.name}"></label></b>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+					<hr></hr>
+					<!-- items measure-->
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Unit of measures</h3>
+							<button type="button"
+								class="btn btn-primary btn-circle btn-lg bmd-btn-fab active pull-right faa-pulse animated"
+								data-toggle="modal" data-title="Add" data-target="#add">
+								<i class="fa fa-plus"></i>
+							</button>
+						</div>
+						<div class="panel-body">
+							<table class="table table-hover" id="measureTable">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Name</th>
+										<th>Quantity</th>
+										<th>Delete</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="measure : ${item.unitOfMeasures}">
+										<th scope="row" th:text="${measure.id}"></th>
+										<td th:text="${measure.name}"></td>
+										<td th:text="${measure.quantity}" contenteditable="true"></td>
+										<td style="width: 50px;"><p data-placement="top"
+												data-toggle="tooltip" title="Delete">
+												<button id="deleteMeasureFromList"
+													class="btn btn-danger btn-s deleteMeasureFromList"
+													data-title="Delete" data-toggle="modal"
+													data-target="#delete" th:attr="data-id=${measure.id}">
+													<span class="fa fa-trash-o"></span>
+												</button>
+											</p></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- modal -->
+					<!-- add modal -->
+					<div class="modal fade" id="add" tabindex="-1" role="dialog"
+						aria-labelledby="add" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">
+										<span class="fa fa-times" aria-hidden="true"></span>
+									</button>
+									<h4 class="modal-title custom_align" id="Heading">Add new
+										unit of measure</h4>
+								</div>
+								<div class="modal-body">
+									<div class="form-group">
+										<input class="form-control" id="nameAdd" type="text"
+											placeholder="name"></input>
+									</div>
+									<div class="form-group">
+										<input class="form-control " type="number" min="0"
+											placeholder="Quantity" name="quantityAdd" id="quantityAdd"></input>
+									</div>
+									<div class="form-group">
+										<select class="form-control" id="itemSelect">
+											<optgroup label="Select item">
+												<option th:value="${item.id}" th:text="${item.name}"></option>
+											</optgroup>
+										</select>
+									</div>
+								</div>
+								<div class="modal-footer ">
+									<button type="button" id="saveMeasure"
+										class="btn btn-primary btn-lg" style="width: 100%;">
+										<span class="fa fa-save"></span> Save
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- delete Measure -->
+					<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+						aria-labelledby="edit" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-body">
+									<input type="hidden" name="modalMeasureId" id="modalMeasureId"
+										value="" />
+								</div>
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">
+										<span class="fa fa-times" aria-hidden="true"></span>
+									</button>
+									<h4 class="modal-title custom_align" id="Heading">Remove
+										measure</h4>
+								</div>
+								<div class="modal-body">
+
+									<div class="alert alert-danger">
+										<span class="glyphicon glyphicon-warning-sign"></span>
+										<p>Remove measure</p>
+									</div>
+
+								</div>
+								<div class="modal-footer ">
+									<button type="button" class="btn btn-primary deleteMeasure">
+										<span class="fa fa-check"></span> 
+										<p th:text="#{yesText}"></p>
+									</button>
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">
+										<span class="fa fa-times"></span> 
+										<p th:text="#{noText}"></p>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+<footer th:replace="master :: app_footer"></footer>
+<script type="text/javascript" src="../js/plugins/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="../js/plugins/sweetalert.min.js"></script>
+<script type="text/javascript">
+	var getUrl = window.location;
+	var url = getUrl.protocol + "//" + getUrl.host;
+	$(".deleteMeasureFromList").click(function() {
+		$("#modalMeasureId").val($(this).attr("data-id"))
+	});
+	$(".deleteMeasure").click(function() {
+		event.preventDefault();
+		deleteMeasure();
+	});
+	//add measure
+	$("#saveMeasure").click(function() {
+		event.preventDefault();
+		addMeasure();
+	});
+	$('#measureTable').DataTable();
+</script>
+</html>

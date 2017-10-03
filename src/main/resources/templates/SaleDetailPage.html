@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader" />
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+
+
+			<div class="page-title">Details</div>
+			<div>
+				<div class="card">
+					<h3 class="card-title">Sale Detail</h3>
+					<hr></hr>
+					&nbsp;&nbsp;&nbsp;<a class="btn btn-primary icon-btn"
+						href="javascript:window.history.back();"><i
+						class="fa fa-arrow-left"></i>Back</a>
+					<form class="form-horizontal">
+						<div class="row card-body">
+							<div class="col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6"> Date :</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${sale.date}"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">
+										Total Amount:</label>
+									<div class="col-md-8 col-sm-6">
+										<b><label class="control-label col-md-8 col-sm-12"
+											th:text="${sale.amount}"></label></b>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">
+										Payment status:</label>
+									<div class="col-md-8 col-sm-6">
+										<b><label class="control-label col-md-8 col-sm-12"
+											th:text="${sale.paymentStatus}"></label></b>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">
+										Customer :</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${sale.customer.fullName}"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">
+										Pay amount:</label>
+									<div class="col-md-8 col-sm-6">
+										<b><label class="control-label col-md-8 col-sm-12"
+											th:text="${sale.payAmount}"></label></b>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">
+										Sale representative:</label>
+									<div class="col-md-8 col-sm-6">
+										<b><label class="control-label col-md-8 col-sm-12"
+											th:text="${sale.seller.fullName}"></label></b>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+					<hr></hr>
+					<!-- sale item-->
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Sale items</h3>
+							<button type="button"
+								class="btn btn-primary btn-circle btn-lg bmd-btn-fab active pull-right faa-pulse animated"
+								data-toggle="modal" data-title="Add" data-target="#add">
+								<i class="fa fa-plus"></i>
+							</button>
+						</div>
+						<div class="panel-body">
+							<table class="table table-hover" id="saleItemTable">
+								<thead>
+									<tr>
+										<th>Quantity</th>
+										<th>Product</th>
+										<th>Unit price</th>
+										<th>Amount</th>
+										<th>Delete</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="item : ${sale.items}">
+										<td th:text="${item.quantity}"></td>
+										<td th:text="${item.itemMovement.purchaseItem.item.name}"></td>
+										<td th:text="${item.unitPrice}"></td>
+										<td th:text="${item.amount}"></td>
+										<td style="width: 50px;"><p data-placement="top"
+												data-toggle="tooltip" title="Delete">
+												<button id="deletePurchaseItemFromList"
+													class="btn btn-danger btn-s deletePurchaseItemFromList"
+													data-title="Delete" data-toggle="modal"
+													data-target="#delete" th:attr="data-id=${item.id}">
+													<span class="fa fa-trash-o"></span>
+												</button>
+											</p></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- sale payments-->
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Sale payments</h3>
+							<button type="button"
+								class="btn btn-primary btn-circle btn-lg bmd-btn-fab active pull-right faa-pulse animated"
+								data-toggle="modal" data-title="Add" data-target="#addSalePayment">
+								<i class="fa fa-plus"></i>
+							</button>
+						</div>
+						<div class="panel-body">
+							<table class="table table-hover" id="salepaymentTable">
+								<thead>
+									<tr>
+										<th>Date</th>
+										<th>Amount</th>
+										<th>Delete</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="p : ${sale.payments}">
+										<td th:text="${p.date}"></td>
+										<td th:text="${p.amount}"></td>
+										<td style="width: 50px;"><p data-placement="top"
+												data-toggle="tooltip" title="Delete">
+												<button id="deleteSalePaymentFromList"
+													class="btn btn-danger btn-s deleteSalePaymentFromList"
+													data-title="Delete" data-toggle="modal"
+													data-target="#deleteSalePayment" th:attr="data-id=${p.id}">
+													<span class="fa fa-trash-o"></span>
+												</button>
+											</p></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- modal -->
+					<!-- add sale item modal -->
+					<div class="modal fade" id="add" tabindex="-1" role="dialog"
+						aria-labelledby="add" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">
+										<span class="fa fa-times" aria-hidden="true"></span>
+									</button>
+									<h4 class="modal-title custom_align" id="Heading">Add sale item</h4>
+								</div>
+								<div class="modal-body">
+									<div class="form-group">
+										<input class="form-control" id="nameAdd" type="text"
+											placeholder="name"></input>
+									</div>
+									<div class="form-group">
+										<input class="form-control " type="number" min="0"
+											placeholder="Quantity" name="quantityAdd" id="quantityAdd"></input>
+									</div>
+								</div>
+								<div class="modal-footer ">
+									<button type="button" id="saveMeasure"
+										class="btn btn-primary btn-lg" style="width: 100%;">
+										<span class="fa fa-save"></span> Save
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- delete sale item modal -->
+					<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+						aria-labelledby="edit" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-body">
+									<input type="hidden" name="modalSaleItemId" id="modalSaleItemId"
+										value="" />
+								</div>
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">
+										<span class="fa fa-times" aria-hidden="true"></span>
+									</button>
+									<h4 class="modal-title custom_align" id="Heading">Delete
+										sale item</h4>
+								</div>
+								<div class="modal-body">
+
+									<div class="alert alert-danger">
+										<span class="glyphicon glyphicon-warning-sign"></span>
+										<p>Delete sale item</p>
+									</div>
+
+								</div>
+								<div class="modal-footer ">
+									<button type="button" class="btn btn-primary deleteSaleItem">
+										<span class="fa fa-check"></span> 
+										<p th:text="#{yesText}"></p>
+									</button>
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">
+										<span class="fa fa-times"></span> 
+										<p th:text="#{noText}"></p>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					
+					<!-- add sale item modal -->
+					<div class="modal fade" id="addSalePayment" tabindex="-1" role="dialog"
+						aria-labelledby="add" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">
+										<span class="fa fa-times" aria-hidden="true"></span>
+									</button>
+									<h4 class="modal-title custom_align" id="Heading">Add Sale Payment</h4>
+								</div>
+								<div class="modal-body">
+									<div class="form-group">
+										<input class="form-control" id="nameAdd" type="text"
+											placeholder="name"></input>
+									</div>
+									<div class="form-group">
+										<input class="form-control " type="number" min="0"
+											placeholder="Quantity" name="quantityAdd" id="quantityAdd"></input>
+									</div>
+								</div>
+								<div class="modal-footer ">
+									<button type="button" id="saveSalePayment"
+										class="btn btn-primary btn-lg" style="width: 100%;">
+										<span class="fa fa-save"></span> Save
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- delete sale item modal -->
+					<div class="modal fade" id="deleteSalePayment" tabindex="-1" role="dialog"
+						aria-labelledby="edit" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-body">
+									<input type="hidden" name="modalSalePaymentId" id="modalSalePaymentId"
+										value="" />
+								</div>
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">
+										<span class="fa fa-times" aria-hidden="true"></span>
+									</button>
+									<h4 class="modal-title custom_align" id="Heading">Delete
+										sale payment</h4>
+								</div>
+								<div class="modal-body">
+
+									<div class="alert alert-danger">
+										<span class="glyphicon glyphicon-warning-sign"></span>
+										<p>Delete sale payment</p>
+									</div>
+
+								</div>
+								<div class="modal-footer ">
+									<button type="button" class="btn btn-primary deleteSalePayment">
+										<span class="fa fa-check"></span> 
+										<p th:text="#{yesText}"></p>
+									</button>
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">
+										<span class="fa fa-times"></span> 
+										<p th:text="#{noText}"></p>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+<footer th:replace="master :: app_footer"></footer>
+<script type="text/javascript" src="../js/plugins/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="../js/plugins/sweetalert.min.js"></script>
+<script type="text/javascript">
+	var getUrl = window.location;
+	var url = getUrl.protocol + "//" + getUrl.host;
+	$(".deleteSaleItemFromList").click(function() {
+		$("#modalSaleItemId").val($(this).attr("data-id"))
+	});
+	$(".deleteSaleItem").click(function() {
+		event.preventDefault();
+		deleteSaleItem();
+	});
+	//add saleItem
+	$("#saveSaleItem").click(function() {
+		event.preventDefault();
+		addSaleItem();
+	});
+	$(".deleteSalePaymentFromList").click(function() {
+		$("#modalSalePaymentId").val($(this).attr("data-id"))
+	});
+	$(".deleteSalePayment").click(function() {
+		event.preventDefault();
+		deleteSalePayment();
+	});
+	//add SalePayment
+	$("#saveSaleItem").click(function() {
+		event.preventDefault();
+		addSalePayment();
+	});
+	$('#saleItemTable').DataTable();
+	$('#salepaymentTable').DataTable();
+</script>
+</html>

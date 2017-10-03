@@ -1,0 +1,83 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+	<changeSet id="AAM-14" author="gasmyr.mougang">
+		<createTable tableName="pointofsale">
+			<column autoIncrement="true" name="id" type="int8">
+				<constraints primaryKey="true" primaryKeyName="pointofsale_pkey"
+					nullable="false" />
+			</column>
+			<column name="name" type="varchar(255)">
+			</column>
+			<column name="address" type="varchar(255)">
+			</column>
+			<column name="phone" type="varchar(255)">
+			</column>
+			<column name="salestrategy" type="varchar(255)">
+			</column>
+			<column name="manager_id" type="int8" />
+			<column name="currency_id" type="int8" />
+			<column name="defaultcustomer_id" type="int8" />
+			<column name="shop_id" type="int8" />
+			<column name="version" type="int8" />
+		</createTable>
+		<insert tableName="pointofsale">
+			<column name="name" value="DefaultPointOfSale" />
+			<column name="salestrategy" value="FIFO" />
+			<column name="address" value="Rue Olembe" />
+			<column name="phone" value="+49 746698756" />
+			<column name="manager_id" valueComputed="(SELECT id FROM _user WHERE username='admin')" />
+			<column name="currency_id" valueComputed="(SELECT id FROM currency WHERE code='fr')" />
+			<column name="defaultcustomer_id"
+				valueComputed="(SELECT id FROM customer WHERE full_name='DefaultCustomer')" />
+			<column name="shop_id" valueComputed="(SELECT id FROM shop WHERE name='IMS Shop')" />
+			<column name="version" value="0" />
+		</insert>
+	</changeSet>
+	<changeSet id="AAM-15" author="gasmyr.mougang">
+		<createTable tableName="stockmovement">
+			<column autoIncrement="true" name="id" type="int8">
+				<constraints primaryKey="true" primaryKeyName="stockmovement_pkey"
+					nullable="false" />
+			</column>
+			<column name="date" type="varchar(255)">
+			</column>
+			<column name="from_store" type="bool" defaultValue="true" />
+			<column name="pointofsale_id" type="int8" />
+			<column name="store_id" type="int8" />
+			<column name="purchase_id" type="int8" />
+			<column name="version" type="int8" />
+		</createTable>
+		<insert tableName="stockmovement">
+			<column name="date" value="2017-10-12 14:20:12" />
+			<column name="from_store" value="true" />
+			<column name="pointofsale_id"
+				valueComputed="(SELECT id FROM pointofsale WHERE name='DefaultPointOfSale')" />
+			<column name="store_id" valueComputed="(SELECT id FROM store WHERE name='IMS Store')" />
+			<column name="purchase_id"
+				valueComputed="(SELECT id FROM purchase WHERE date='2017-09-12 14:20:12')" />
+			<column name="version" value="0" />
+		</insert>
+		<createTable tableName="itemmovement">
+			<column autoIncrement="true" name="id" type="int8">
+				<constraints primaryKey="true" primaryKeyName="itemmovement_pkey"
+					nullable="false" />
+			</column>
+			<column name="quantity" type="int8">
+				<constraints nullable="false" />
+			</column>
+			<column name="purchaseitem_id" type="int8" />
+			<column name="stockmovement_id" type="int8" />
+			<column name="version" type="int8" />
+		</createTable>
+		<insert tableName="itemmovement">
+			<column name="quantity" value="3" />
+			<column name="purchaseitem_id"
+				valueComputed="(SELECT id FROM purchaseitem WHERE price='7500')" />
+			<column name="stockmovement_id"
+				valueComputed="(SELECT id FROM stockmovement WHERE date='2017-10-12 14:20:12')" />
+			<column name="version" value="0" />
+		</insert>
+	</changeSet>
+</databaseChangeLog>
