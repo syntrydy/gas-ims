@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader">
+</head>
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+			<div class="page-title">Shop configuration</div>
+			
+			<div class="card">
+				<div class="card-body">
+					<!-- tabs -->
+					<ul class="nav nav-tabs" id="myTab" role="tablist">
+						<li class="nav-item"><a class="nav-link" id="shop-tab"
+							data-toggle="tab" href="#shop" role="tab" aria-controls="shop"
+							aria-expanded="true">Shop</a></li>
+						<li class="nav-item"><a class="nav-link" id="mail-tab"
+							data-toggle="tab" href="#mail" role="tab" aria-controls="mail">Mail</a></li>
+						<li class="nav-item"><a class="nav-link" id="license-tab"
+							data-toggle="tab" href="#license" role="tab" aria-controls="license">License
+								Information</a></li>
+					</ul>
+					<!-- end tabs -->
+					<!-- tabs contents -->
+					<div class="tab-content">
+						<!-- licence -->
+						<div id="license" class="tab-pane fade" role="tabpanel" aria-labelledby="license-tab">
+							<div class="card-title">Work in progress</div>
+							<button class="btn btn-primary">
+								<i class="fa fa-info"></i> Request license info
+							</button>
+						</div>
+						<!-- mail settings -->
+						<div id="mail" class="tab-pane fade" role="tabpanel" aria-labelledby="mail-tab">
+							<form>
+								<div class="form-group col-md-6">
+									<label for="name">Host name</label> <input type="text"
+										class="form-control" id="hostname"
+										placeholder="server ip or name"></input>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="name">Shop email</label> <input type="email"
+										class="form-control" id="hostname"
+										placeholder="shop email account"></input>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="shopeamilpassword">email password</label> <input
+										type="password" class="form-control" id="password"
+										placeholder="password"></input>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="shopeamilpassword">repeat password</label> <input
+										type="password" class="form-control" id="password"
+										placeholder="re-password"></input>
+								</div>
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</form>
+						</div>
+						<!-- shop -->
+						<div id="shop" class="tab-pane fade show active" role="tabpanel" aria-labelledby="shop-tab">
+							<form>
+								<div class="form-group col-md-6">
+									<label for="name">shop name</label> <input type="text"
+										class="form-control" id="name" placeholder="shop name"></input>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="logo">logo</label> <input type="email"
+										class="form-control" id="logo" placeholder="shop logo"></input>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="site">Web site</label> <input type="text"
+										class="form-control" id="site" placeholder="web site"></input>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="fax">Fax Number</label> <input type="text"
+										class="form-control" id="fax" placeholder="fax number"></input>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="tva">Tva</label> <input type="text"
+										class="form-control" id="tva" placeholder="tva percentage"></input>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="fax">Email</label> <input type="email"
+										class="form-control" id="email" placeholder="email"></input>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="currency">Currency</label> <select id="currency"
+										class="form-control">
+										<option></option>
+										<option>FCFA</option>
+										<option>EURO</option>
+										<option>DOLLAR</option>
+									</select>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="strategy">Sale strategy</label> <select
+										id="strategy" class="form-control">
+										<option>FIFO</option>
+										<option>LIFO</option>
+										<option>RANDOM</option>
+									</select>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="customer">Default Customer</label> <select
+										id="customer" class="form-control">
+										<option></option>
+									</select>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="customer">Shop owner</label> <select id="owner"
+										class="form-control">
+										<option></option>
+									</select>
+								</div>
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<script type="text/javascript">
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		  e.target // newly activated tab
+		  e.relatedTarget // previous active tab
+		  alert(e.target)
+		})
+	</script>
+</body>
+<footer th:replace="master :: app_footer"></footer>
+</html>

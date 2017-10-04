@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader" />
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+			<div class="row rounded">
+				<div class="col-md-3 rounded">
+					<div class="card p-0">
+						<ul class="nav nav-tabs nav-stacked user-tabs">
+							<li><a href="#settings" data-toggle="tab"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;My Profile</a></li>
+							<li><a href="#messages" data-toggle="tab"><i class="fa fa-comments"></i>&nbsp;My Messages</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="tab-content">
+					<div class="tab-pane" id="messages">
+						<div class="card">
+							<div class="timeline">
+								<div class="post">
+									<div class="post-media">
+										<a href="#"><img src="../images/autor.jpg"></img></a>
+										<div class="content">
+											<h5>
+												<a href="#" th:text="${username}"></a>
+											</h5>
+										</div>
+									</div>
+									<div class="post-content">
+										<p>No messages available.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade rightPanel" id="settings">
+						<div class="card user-settings">
+							<h4 class="line-head">Settings</h4>
+							<form>
+								<div class="row mb-20">
+									<div class="col-md-6">
+										<label>Full Name</label> <input class="form-control"
+											type="text"></input>
+									</div>
+									<div class="col-md-6 mb-20">
+										<label>Email</label> <input class="form-control" type="email"></input>
+									</div>
+								</div>
+								<div class="row mb-20">
+									<div class="col-md-6">
+										<label>Old password</label> <input class="form-control"
+											type="password"></input>
+									</div>
+									<div class="col-md-6 mb-20">
+										<label>Re old password</label> <input class="form-control"
+											type="password"></input>
+									</div>
+								</div>
+								<div class="row mb-20">
+									<div class="col-md-6">
+										<label>New password</label> <input class="form-control"
+											type="password"></input>
+									</div>
+									<div class="col-md-6 mb-20">
+										<label>Re new password</label> <input class="form-control"
+											type="password"></input>
+									</div>
+								</div>
+								<div class="row mb-20">
+									<div class="col-md-6">
+										<label>Phone number</label> <input class="form-control"
+											type="text"></input>
+									</div>
+									<div class="col-md-6 mb-20">
+										<label>Address</label>
+										<textarea class="form-control" type="text"></textarea>
+									</div>
+								</div>
+								<div class="row mb-10">
+									<div class="col-md-12">
+										<button class="btn btn-primary" type="button">
+											<i class="fa fa-fw fa-lg fa-check-circle"></i> Save
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
+		</div>
+	</div>
+
+
+</body>
+<footer th:replace="master :: app_footer"></footer>
+</html>

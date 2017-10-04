@@ -33,6 +33,33 @@
 				<!-- Navbar Right Menu-->
 				<div class="navbar-custom-menu">
 					<ul class="top-nav">
+						<!--Notification Menu-->
+						<li class="dropdown notification-menu"><a
+							class="dropdown-toggle" href="#" data-toggle="dropdown"
+							aria-expanded="false"><i class="fa fa-bell-o fa-lg"></i></a>
+							<ul class="dropdown-menu">
+								<li class="not-head">Notificatons</li>
+								<li><a class="media" href="javascript:;"><span
+										class="media-left media-icon"><span
+											class="fa-stack fa-lg"><i
+												class="fa fa-circle fa-stack-2x text-primary"></i><i
+												class="fa fa-envelope fa-stack-1x fa-inverse"></i></span></span>
+										<div class="media-body">
+											<span class="block">One product need purchase</span><span
+												class="text-muted block">2min ago</span>
+										</div></a></li>
+								<li class="not-footer"><a href="#">view all
+										notifications.</a></li>
+							</ul></li>
+						<!-- User Menu-->
+						<li class="dropdown"><a class="dropdown-toggle" href="#"
+							data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false"><i class="fa fa-user fa-lg"></i></a>
+							<ul class="dropdown-menu settings-menu">
+								<li><a href="/config"><i class="fa fa-cog fa-lg"></i><span th:text="#{settingsMenuText}">Settings</span></a></li>
+								<li><a href="/profile"><i class="fa fa-user fa-lg"></i><span th:text="${username}"></span></a></li>
+								<li><a href="/login"><i class="fa fa-sign-out fa-lg"></i><span th:text="#{signOutMenuText}"></span></a></li>
+							</ul></li>
 					</ul>
 				</div>
 			</nav>
@@ -130,6 +157,8 @@
 
 	<footer class="page-footer myfooter back" th:fragment="app_footer">
 		<!-- Java scripts-->
+		<!-- 		<script -->
+		<!-- 			src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script> -->
 		<script src="../js/jquery-2.1.4.min.js"
 			th:src="@{../js/jquery-2.1.4.min.js}"></script>
 		<script src="../js/bootstrap.min.js"
@@ -144,8 +173,6 @@
 		<script src="../js/sale.js" th:src="@{../js/sale.js}"></script>
 		<script src="../js/plugins/jquery.dataTables.min.js"></script>
 		<script src="../js/plugins/dataTables.bootstrap.min.js"></script>
-		<script
-			src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 	</footer>
 </body>
 </html>

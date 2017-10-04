@@ -221,7 +221,7 @@ public class UserRestConroller {
 			MessageToSend message = new MessageToSend();
 			message.setTo(userToReset.getEmail());
 			message.setSubject("Password Reset");
-			message.setText("<b><u>You just request a password reset</u></b>");
+			message.setText("<body><br><h2><center>Password reset</center></h2><br> <p><b style='color:blue;font-size:2em;font-familly:Arail;font-weight:2em;'>Hi, you receive this mail beacause you joss ask the reset of your password.</b> </p></body>");
 			message.setFrom(MailConfig.FROM);
 			mailService.sendHtmlMail(message);
 		} catch (Exception e) {

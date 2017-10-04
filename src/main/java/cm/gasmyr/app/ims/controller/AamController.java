@@ -17,5 +17,19 @@ public class AamController {
 		model.addAttribute("username", Utils.getUserName(principal));
 		return "HomePage";
 	}
+	
+	@RequestMapping(value = "/config", method = RequestMethod.GET)
+	public String config(Model model, Principal principal) {
+		model.addAttribute("username", Utils.getUserName(principal));
+		return "ShopConfigPage";
+	}
+	
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public String profile(Model model, Principal principal) {
+		model.addAttribute("username", Utils.getUserName(principal));
+		return "UserProfilePage";
+	}
+	
+	
 
 }
