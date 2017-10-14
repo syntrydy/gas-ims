@@ -7,6 +7,16 @@
 	width: 35%;
 }
 
+.demo{
+	border-radius: 10px;
+	background: purple;
+	width: 70%;
+	color:white;
+	text-align: center;
+	font-size: 1.2em;
+	margin: 10px;
+}
+
 rightPanel {
 	float: right;
 	position:relative;
