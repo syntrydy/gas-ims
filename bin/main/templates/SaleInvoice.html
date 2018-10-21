@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader" />
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+
+
+			<div class="page-title hidden-print">
+				<div>
+					<h1>
+						<i class="fa fa-file-text-o"></i> Sale Invoice
+					</h1>
+					<p>This format is printable</p>
+				</div>
+				<div>
+					<ul class="breadcrumb">
+						<li><i class="fa fa-home fa-lg"></i></li>
+						<li><a href="#">Invoice</a></li>
+					</ul>
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<section class="invoice">
+							<div class="row">
+								<div class="col-xs-12">
+									<h2 class="page-header">
+										<i class="fa fa-globe"></i> <b  th:text="${sale.pointOfSale.shop.name}"></b><small class="pull-right">Date&nbsp;&nbsp;:&nbsp;<b
+											th:text="${sale.date}"></b>
+										</small>
+									</h2>
+								</div>
+							</div>
+							<div class="row invoice-info">
+								<div class="col-xs-4">
+									From 
+									<address>
+										<strong th:text="${sale.pointOfSale.shop.name}"></strong><br></br>
+										<i th:text="${sale.pointOfSale.shop.phone}"></i><br></br>
+										<i th:text="${sale.pointOfSale.shop.email}"></i><br></br>
+										<i th:text="${sale.pointOfSale.shop.address}"></i><br></br>
+									</address>
+								</div>
+								<div class="col-xs-4">
+									To
+									<address>
+										<strong th:text="${sale.customer.fullName}"></strong><br></br>
+										<i th:text="${sale.customer.address}"></i><br></br> <i
+											th:text="${sale.customer.phone}"></i><br></br> <i
+											th:text="${sale.customer.email}"></i><br></br>
+									</address>
+								</div>
+								<div class="col-xs-4">
+									<b th:text="Invoice +' No '+ ${sale.getInvoiceNumber()}"></b><br></br>
+									<br></br> <b>Order ID:</b> <i
+										th:text="${sale.getInvoiceNumber()}"></i><br></br> <b>Payment
+										Due:</b><i th:text="${sale.date}"></i><br></br> <b>Status:</b>
+									<i th:text="${sale.paymentStatus}"></i>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12 table-responsive">
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th>Quantity</th>
+												<th>Product</th>
+												<th>Description</th>
+												<th>Unit price</th>
+												<th>Amount</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="item : ${sale.items}">
+												<td th:text="${item.quantity}"></td>
+												<td th:text="${item.itemMovement.purchaseItem.item.name}"></td>
+												<td
+													th:text="${item.itemMovement.purchaseItem.item.description}"></td>
+												<td th:text="${item.unitPrice}"></td>
+												<td th:text="${item.amount}"></td>
+											</tr>
+										</tbody>
+									</table>
+									   <!-- total amount -->
+									   <div>
+									        <strong style="font-size:2em;">Total:</strong><i style="font-size:2em;" th:text="${sale.amount}+ ' ' +${sale.pointOfSale.currency.value}"></i>
+									   </div>
+								</div>
+							</div>
+							<div class="row hidden-print mt-20">
+								<div class="col-xs-12 text-right">
+									<a class="btn btn-primary" href="javascript:window.print();"
+										target="_blank"><i class="fa fa-print"></i> Print</a>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+
+
+
+
+		</div>
+	</div>
+</body>
+<footer th:replace="master :: app_footer"></footer>
+</html>

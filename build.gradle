@@ -33,8 +33,10 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.jasypt:jasypt-springsecurity3:1.9.0')
 	compile('org.springframework.boot:spring-boot-starter-mail')
+	compile group: 'com.lowagie', name: 'itext', version: '4.2.2'
 	runtime('org.springframework.boot:spring-boot-devtools')
 	runtime('org.postgresql:postgresql')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')
+	
 }

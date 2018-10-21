@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader" />
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+
+
+
+
+			<div class="page-title"
+				th:text="#{homeMenuText}+' > '+ Stocks + ' > '+List"></div>
+			<div>
+				<div class="card">
+					<h3 class="card-title">Stock Movement</h3>
+					<a th:href="@{/movement}"><button type="button"
+							class="btn btn-success bmd-btn-fab active pull-right">
+							<i class="fa fa-plus">&nbsp;Add</i>
+						</button> </a>
+					<table class="table table-inverse table-hover" id="stockTable">
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Store</th>
+								<th>Point of sale</th>
+								<th>From Store</th>
+								<th>Purchase</th>
+								<th>Detail</th>
+								<th>Edit</th>
+								<th>Delete</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="m : ${movements}">
+								<td th:text="${m.date}"></td>
+								<td><a th:href="@{/stores}" th:text="${m.store.name}"></a></td>
+								<td><a th:href="@{/pofsale/{id}(id=${m.pointOfSale.id})}"
+									th:text="${m.pointOfSale.name}"></a></td>
+								<td th:text="${m.fromStore}"></td>
+								<td><a th:href="@{/purchase/{id}(id=${m.purchase.id})}"
+									th:text="${m.purchase.date}"></a></td>
+								<td style="width: 50px;"><p data-placement="top"
+										title="Details">
+										<a th:href="@{/movement/{id}(id=${m.id})}"><button
+												class="btn btn-primary btn-s" data-id="${m.id}">
+												<span class="fa fa-eye"></span>
+											</button></a>
+									</p></td>
+								<td style="width: 50px;"><p title="Edit">
+										<a th:href="@{/emovement/{id}(id=${m.id})}"><button
+												class="btn btn-primary btn-s">
+												<span class="fa fa-pencil"></span>
+											</button></a>
+									</p></td>
+								<td style="width: 50px;"><p data-placement="top"
+										data-toggle="tooltip" title="Delete">
+										<button id="deleteMovementFromList"
+											class="btn btn-danger btn-s deleteMovementFromList"
+											data-title="Delete" data-toggle="modal" data-target="#delete"
+											th:attr="data-id=${m.id}">
+											<span class="fa  fa-trash"></span>
+										</button>
+									</p></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+
+
+
+			<!-- delete modal -->
+			<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+				aria-labelledby="edit" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-body">
+							<input type="hidden" name="modalMovementId" id="modalMovementId"
+								value="" />
+						</div>
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">
+								<span class="fa fa-times" aria-hidden="true"></span>
+							</button>
+							<h4 class="modal-title custom_align" id="Heading">Delete
+								Movement</h4>
+						</div>
+						<div class="modal-body">
+
+							<div class="alert alert-danger">
+								<span class="glyphicon glyphicon-warning-sign"></span>
+								<p>Do you really want to delete this stock movement?</p>
+							</div>
+
+						</div>
+						<div class="modal-footer ">
+							<button type="button" class="btn btn-primary deleteMovement">
+								<span class="fa fa-check"></span> 
+								<p th:text="#{yesText}"></p>
+							</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">
+								<span class="fa fa-times"></span> 
+								<p th:text="#{noText}"></p>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<footer th:replace="master :: app_footer"></footer>
+<script type="text/javascript" src="js/plugins/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="js/plugins/sweetalert.min.js"></script>
+<script type="text/javascript">
+	var getUrl = window.location;
+	var url = getUrl.protocol + "//" + getUrl.host;
+	$(".deleteMovementFromList").click(function() {
+		$("#modalMovementId").val($(this).attr("data-id"))
+	});
+	$(".deleteMovement").click(function() {
+		event.preventDefault();
+		deleteMovement();
+	});
+	$('#stockTable').DataTable();
+</script>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader" />
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+
+
+			<div class="page-title">Details</div>
+			<div>
+				<div class="card">
+					<h3 class="card-title">Purchase Detail</h3>
+					<hr></hr>
+					&nbsp;&nbsp;&nbsp;<a class="btn btn-primary icon-btn"
+						href="javascript:window.history.back();"><i
+						class="fa fa-arrow-left"></i>Back</a>
+					<form class="form-horizontal">
+						<div class="row card-body">
+							<div class="col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6"> Date :</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${purchase.date}"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">
+										Provider:</label>
+									<div class="col-md-8 col-sm-6">
+										<b><label class="control-label col-md-8 col-sm-12"
+											th:text="${purchase.provider.fullName}"></label></b>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-12">
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6"> Total
+										Amount :</label>
+									<div class="col-md-8 col-sm-6">
+										<label class="control-label col-md-8 col-sm-12"
+											th:text="${purchase.amount}"></label>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-4 col-sm-6">
+										Receiving store :</label>
+									<div class="col-md-8 col-sm-6">
+										<b><label class="control-label col-md-8 col-sm-12"
+											th:text="${purchase.store.name}"></label></b>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+					<hr></hr>
+					<!-- items measure-->
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">Purchase items</h3>
+							<button type="button"
+								class="btn btn-primary btn-circle btn-lg bmd-btn-fab active pull-right faa-pulse animated"
+								data-toggle="modal" data-title="Add" data-target="#add">
+								<i class="fa fa-plus"></i>
+							</button>
+						</div>
+						<div class="panel-body">
+							<table class="table table-hover" id="purchaseItemTable">
+								<thead>
+									<tr>
+										<th>Item</th>
+										<th>Unit of measure</th>
+										<th>Quantity</th>
+										<th>Unit price</th>
+										<th>Total price</th>
+										<th>Delete</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="item : ${purchase.purchaseItems}">
+										<td th:text="${item.item.name}"></td>
+										<td
+											th:text="${item.unitOfMeasure.name}+ '-'+${item.unitOfMeasure.quantity}"></td>
+										<td th:text="${item.quantity}"></td>
+										<td th:text="${item.unitPrice}"></td>
+										<td th:text="${item.price}"></td>
+										<td style="width: 50px;"><p data-placement="top"
+												data-toggle="tooltip" title="Delete">
+												<button id="deletePurchaseItemFromList"
+													class="btn btn-danger btn-s deletePurchaseItemFromList"
+													data-title="Delete" data-toggle="modal"
+													data-target="#delete" th:attr="data-id=${item.id}">
+													<span class="fa fa-trash-o"></span>
+												</button>
+											</p></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!-- modal -->
+					<!-- add modal -->
+					<div class="modal fade" id="add" tabindex="-1" role="dialog"
+						aria-labelledby="add" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">
+										<span class="fa fa-times" aria-hidden="true"></span>
+									</button>
+									<h4 class="modal-title custom_align" id="Heading">Add
+										purchase item</h4>
+								</div>
+								<div class="modal-body">
+									<div class="form-group">
+										<label class="control-label">Item </label> <select
+											class="form-control" id="itemSelect">
+											<optgroup label="Select item">
+												<option th:value="-1" ></option>
+												<option th:each="item : ${items}" th:value="${item.id}"
+													th:text="${item.name}"></option>
+											</optgroup>
+										</select>
+									</div>
+									<div class="form-group">
+										<label class="control-label">Unit of measure </label> <select
+											class="form-control" id="measureSelect">
+											<optgroup label="Select unit of measure">
+												<option th:each="measure : ${measures}"
+													th:value="${measure.id}" th:text="${measure.name}"></option>
+											</optgroup>
+										</select>
+									</div>
+									<div class="form-group">
+										<input class="form-control " type="number" min="0"
+											placeholder="Quantity" name="quantityAdd" id="quantityAdd"></input>
+									</div>
+									<div class="form-group">
+										<input class="form-control " type="number" min="0"
+											placeholder="Amount" name="priceAdd" id="priceAdd"></input>
+									</div>
+									<div class="form-group">
+										<label class="control-label">Purchase </label> <select
+											class="form-control" id="purchaseSelect">
+											<optgroup label="Select purchase">
+												<option th:value="${purchase.id}" th:text="${purchase.date}"></option>
+											</optgroup>
+										</select>
+									</div>
+
+								</div>
+								<div class="modal-footer ">
+									<button type="button" id="savePurchaseItem"
+										class="btn btn-primary btn-lg" style="width: 100%;">
+										<span class="fa fa-save"></span> Save
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- delete Purchase item -->
+					<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+						aria-labelledby="edit" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-body">
+									<input type="hidden" name="modalPurchaseItemId" id="modalPurchaseItemId"
+										value="" />
+								</div>
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">
+										<span class="fa fa-times" aria-hidden="true"></span>
+									</button>
+									<h4 class="modal-title custom_align" id="Heading">Remove
+										purchase item</h4>
+								</div>
+								<div class="modal-body">
+
+									<div class="alert alert-danger">
+										<span class="glyphicon glyphicon-warning-sign"></span>
+										<p>Remove purchase item</p>
+									</div>
+
+								</div>
+								<div class="modal-footer ">
+									<button type="button"
+										class="btn btn-primary deletePurchaseItem">
+										<span class="fa fa-check"></span> 
+										<p th:text="#{yesText}"></p>
+									</button>
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">
+										<span class="fa fa-times"></span> 
+										<p th:text="#{noText}"></p>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+<footer th:replace="master :: app_footer"></footer>
+<script type="text/javascript"
+	src="../js/plugins/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="../js/plugins/sweetalert.min.js"></script>
+<script type="text/javascript">
+	var getUrl = window.location;
+	var url = getUrl.protocol + "//" + getUrl.host;
+	$(".deletePurchaseItemFromList").click(function() {
+		$("#modalPurchaseItemId").val($(this).attr("data-id"))
+	});
+	$(".deletePurchaseItem").click(function() {
+		event.preventDefault();
+		deletePurchaseItem();
+	});
+	//add PurchaseItem
+	$("#savePurchaseItem").click(function() {
+		event.preventDefault();
+		addPurchaseItem();
+	});
+	$('#purchaseItemTable').DataTable();
+	$("#itemSelect").change(function() {
+		getMeasureOf($(this).val());
+	})
+</script>
+</html>

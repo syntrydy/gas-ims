@@ -1,0 +1,104 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+	<changeSet id="AAM-07" author="gasmyr.mougang">
+		<createTable tableName="shop">
+			<column autoIncrement="true" name="id" type="int8">
+				<constraints primaryKey="true" primaryKeyName="shop_pkey"
+					nullable="false" />
+			</column>
+			<column name="name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="phone" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="email" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="website" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="address" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="owner_id" type="int8" />
+			<column name="version" type="int8" />
+		</createTable>
+		<insert tableName="shop">
+			<column name="name" value="IMS Shop" />
+			<column name="phone" value="1324354657687960" />
+			<column name="email" value="imsshopping@yahoo.fr" />
+			<column name="address" value="CM,CENTRE,YAOUNDE" />
+			<column name="website" value="www.imsshopping.cm" />
+			<column name="owner_id" valueComputed="(SELECT id FROM _user WHERE username='admin')" />
+			<column name="version" value="0" />
+		</insert>
+	</changeSet>
+	<changeSet id="AAM-08" author="gasmyr.mougang">
+		<createTable tableName="category">
+			<column autoIncrement="true" name="id" type="int8">
+				<constraints primaryKey="true" primaryKeyName="category_pkey"
+					nullable="false" />
+			</column>
+			<column name="name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="description" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="int8" />
+		</createTable>
+		<insert tableName="category">
+			<column name="name" value="IMS DefaultCategory" />
+			<column name="description" value="The default category for nproducts" />
+			<column name="version" value="0" />
+		</insert>
+	</changeSet>
+	<changeSet id="AAM-09" author="gasmyr.mougang">
+		<createTable tableName="item">
+			<column autoIncrement="true" name="id" type="int8">
+				<constraints primaryKey="true" primaryKeyName="item_pkey"
+					nullable="false" />
+			</column>
+			<column name="name" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="description" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="threshold" type="int8" />
+			<column name="category_id" type="int8" />
+			<column name="version" type="int8" />
+		</createTable>
+		<insert tableName="item">
+			<column name="name" value="IMS DefaultProduct" />
+			<column name="description" value="The default product" />
+			<column name="threshold" value="5" />
+			<column name="category_id"
+				valueComputed="(SELECT id FROM category WHERE name='IMS DefaultCategory')" />
+			<column name="version" value="0" />
+		</insert>
+	</changeSet>
+	<changeSet id="AAM-10" author="gasmyr.mougang">
+		<createTable tableName="store">
+			<column autoIncrement="true" name="id" type="int8">
+				<constraints primaryKey="true" primaryKeyName="store_pkey"
+					nullable="false" />
+			</column>
+			<column name="name" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="storekeeper_id" type="int8" />
+			<column name="shop_id" type="int8" />
+			<column name="version" type="int8" />
+		</createTable>
+		<insert tableName="store">
+			<column name="name" value="IMS Store" />
+			<column name="storekeeper_id" valueComputed="(SELECT id FROM _user WHERE username='admin')" />
+			<column name="shop_id" valueComputed="(SELECT id FROM shop WHERE name='IMS Shop')" />
+			<column name="version" value="0" />
+		</insert>
+	</changeSet>
+</databaseChangeLog>

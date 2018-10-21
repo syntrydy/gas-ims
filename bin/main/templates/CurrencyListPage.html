@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader" />
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+
+
+
+
+			<div class="page-title"
+				th:text="#{homeMenuText}+' > '+ Administration+ ' > ' +Currencies"></div>
+			<div>
+				<div class="card">
+					<h3 class="card-title" > List of currencies</h3>
+					<button type="button"
+						class="btn btn-success bmd-btn-fab active pull-right"
+						data-toggle="modal" data-title="Add" data-target="#add">
+						<i class="fa fa-plus" th:text="#{ButtonAddText}">&nbsp;Add</i>
+					</button>
+					<table class="table table-inverse table-hover" id="currencyTable">
+						<thead>
+							<tr>
+								<th>Code</th>
+								<th>Value</th>
+								<th>Edit</th>
+								<th>Delete</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="c : ${currencies}">
+								<td th:text="${c.code}"></td>
+								<td th:text="${c.value}"></td>
+								<td style="width: 50px;"><p title="Edit">
+												<a th:href="@{/ecurrency/{id}(id=${c.id})}"><button
+														class="btn btn-primary btn-s">
+														<span class="fa fa-pencil"></span>
+													</button></a>
+											</p></td>
+								<td style="width: 50px;"><p data-placement="top"
+										data-toggle="tooltip" title="Delete">
+										<button id="deleteCurrencyFromList"
+											class="btn btn-danger btn-s deleteCurrencyFromList"
+											data-title="Delete" data-toggle="modal" data-target="#delete"
+											th:attr="data-id=${c.id}">
+											<span class="fa  fa-trash"></span>
+										</button>
+									</p></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+
+		
+			<!-- add modal -->
+			<div class="modal fade" id="add" tabindex="-1" role="dialog"
+				aria-labelledby="add" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">
+								<span class="fa fa-times" aria-hidden="true"></span>
+							</button>
+							<h4 class="modal-title custom_align" id="Heading">Add new
+								currency</h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-group">
+								<input class="form-control" id="codeAdd"  type="text"
+									placeholder="currency code"></input>
+							</div>
+							<div class="form-group">
+
+								<input class="form-control " type="text"
+									placeholder="currency value" id="valueAdd"></input>
+							</div>
+						</div>
+						<div class="modal-footer ">
+							<button type="button" id="saveCurrency"
+								class="btn btn-primary btn-lg" style="width: 100%;">
+								<span class="fa fa-save"></span> Save
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- delete modal -->
+			<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+				aria-labelledby="edit" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-body">
+							<input type="hidden" name="modalCurrencyId" id="modalCurrencyId"
+								value="" />
+						</div>
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">
+								<span class="fa fa-times" aria-hidden="true"></span>
+							</button>
+							<h4 class="modal-title custom_align" id="Heading"
+								th:text="#{DeleteRoleText}">Delete currency</h4>
+						</div>
+						<div class="modal-body">
+
+							<div class="alert alert-danger">
+								<span class="glyphicon glyphicon-warning-sign"></span>
+								<p th:text="#{DeleteRoleWarnningMessage}"></p>
+							</div>
+
+						</div>
+						<div class="modal-footer ">
+							<button type="button" class="btn btn-primary deleteCurrency">
+								<span class="fa fa-check"></span> 
+								<p th:text="#{yesText}"></p>
+							</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">
+								<span class="fa fa-times"></span> 
+								<p th:text="#{noText}"></p>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+<footer th:replace="master :: app_footer"></footer>
+<script type="text/javascript" src="js/plugins/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="js/plugins/sweetalert.min.js"></script>
+<script type="text/javascript">
+	var getUrl = window.location;
+	var url = getUrl.protocol + "//" + getUrl.host;
+	$(".deleteCurrencyFromList").click(function() {
+		$("#modalCurrencyId").val($(this).attr("data-id"))
+	});
+	$(".deleteCurrency").click(function() {
+		event.preventDefault();
+		deleteCurrency();
+	});
+	//adding currency
+	$("#saveCurrency").click(function() {
+		event.preventDefault();
+		addCurrency();
+	});
+	$('#currencyTable').DataTable();
+</script>
+</html>

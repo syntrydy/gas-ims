@@ -1,0 +1,33 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+	<changeSet id="AAM-17" author="gasmyr.mougang">
+		<createTable tableName="salepayment">
+			<column autoIncrement="true" name="id" type="int8">
+				<constraints primaryKey="true" primaryKeyName="salepayment_pkey"
+					nullable="false" />
+			</column>
+			<column name="date" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="amount" type="double" />
+			<column name="sale_id" type="int8" />
+			<column name="version" type="int8" />
+		</createTable>
+		<insert tableName="salepayment">
+			<column name="amount" value="400" />
+			<column name="date" value="2017-11-25 14:35:12" />
+			<column name="sale_id"
+				valueComputed="(SELECT id FROM sale WHERE date='2017-11-12 14:20:12')" />
+			<column name="version" value="0" />
+		</insert>
+		<insert tableName="salepayment">
+			<column name="amount" value="500" />
+			<column name="date" value="2017-11-25 15:20:05" />
+			<column name="sale_id"
+				valueComputed="(SELECT id FROM sale WHERE date='2017-11-12 14:20:12')" />
+			<column name="version" value="0" />
+		</insert>
+	</changeSet>
+</databaseChangeLog>

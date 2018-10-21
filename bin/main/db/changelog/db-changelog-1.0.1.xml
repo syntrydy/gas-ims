@@ -1,0 +1,92 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+	<changeSet id="AAM-04" author="gasmyr.mougang">
+		<createTable tableName="provider">
+			<column autoIncrement="true" name="id" type="int8">
+				<constraints primaryKey="true" primaryKeyName="provider_pkey"
+					nullable="false" />
+			</column>
+			<column name="full_name" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="phone" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="email" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="address" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="enable" type="bool" defaultValue="true" />
+			<column name="version" type="int8" />
+		</createTable>
+		<insert tableName="provider">
+			<column name="full_name" value="DefaultProvider" />
+			<column name="phone" value="5689234156" />
+			<column name="email" value="provider@yahoo.fr" />
+			<column name="address" value="US,Canvas,695" />
+			<column name="enable" value="true" />
+			<column name="version" value="0" />
+		</insert>
+	</changeSet>
+	<changeSet id="AAM-05" author="gasmyr.mougang">
+		<createTable tableName="customer">
+			<column autoIncrement="true" name="id" type="int8">
+				<constraints primaryKey="true" primaryKeyName="customer_pkey"
+					nullable="false" />
+			</column>
+			<column name="full_name" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="phone" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="email" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="address" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="trustable" type="bool" defaultValue="true" />
+			<column name="version" type="int8" />
+		</createTable>
+		<insert tableName="customer">
+			<column name="full_name" value="DefaultCustomer" />
+			<column name="phone" value="+237 XXXXXXXX" />
+			<column name="email" value="customer@yahoo.fr" />
+			<column name="address" value="CM,XXXXX,XX" />
+			<column name="trustable" value="true" />
+			<column name="version" value="0" />
+		</insert>
+	</changeSet>
+	<changeSet id="AAM-06" author="gasmyr.mougang">
+		<createTable tableName="currency">
+			<column autoIncrement="true" name="id" type="int8">
+				<constraints primaryKey="true" primaryKeyName="currency_pkey"
+					nullable="false" />
+			</column>
+			<column name="code" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="value" type="varchar(255)">
+				<constraints nullable="true" />
+			</column>
+			<column name="version" type="int8" />
+		</createTable>
+		<insert tableName="currency">
+			<column name="code" value="fr" />
+			<column name="value" value="FCFA" />
+			<column name="version" value="0" />
+		</insert>
+		<insert tableName="currency">
+			<column name="code" value="$" />
+			<column name="value" value="DOLLAR" />
+			<column name="version" value="0" />
+		</insert>
+	</changeSet>
+
+
+</databaseChangeLog>

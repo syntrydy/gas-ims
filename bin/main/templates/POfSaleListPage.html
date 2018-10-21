@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:replace="master :: app_firstheader" />
+<body class="sidebar-mini fixed">
+	<div class="wrapper">
+		<header th:replace="master :: app_secondheader"></header>
+		<aside th:replace="master :: app_aside"></aside>
+		<div class="content-wrapper">
+
+			<div class="page-title">PointOfSales</div>
+			<div>
+				<div class="card">
+					<h3 class="card-title">PointOfSales</h3>
+					<a th:href="@{/pofsale}"><button type="button"
+							class="btn btn-success bmd-btn-fab active pull-right">
+							<i class="fa fa-plus">&nbsp;Add</i>
+						</button> </a>
+					<table class="table table-inverse table-hover"
+						id="pointOfSaleTable">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Address</th>
+								<th>Phone</th>
+								<th>Shop</th>
+								<th>Detail</th>
+								<th>Edit</th>
+								<th>Delete</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="pos : ${pofsales}">
+								<td th:text="${pos.name}"></td>
+								<td th:text="${pos.address}"></td>
+								<td th:text="${pos.phone}"></td>
+								<td th:text="${pos.shop.name}"></td>
+								<td style="width: 50px;"><p data-placement="top"
+										title="Details">
+										<a th:href="@{/pofsale/{id}(id=${pos.id})}"><button
+												class="btn btn-primary btn-s" data-id="${pos.id}">
+												<span class="fa fa-eye"></span>
+											</button></a>
+									</p></td>
+								<td style="width: 50px;"><p title="Edit">
+										<a th:href="@{/epofsale/{id}(id=${pos.id})}"><button
+												class="btn btn-primary btn-s">
+												<span class="fa fa-pencil"></span>
+											</button></a>
+									</p></td>
+								<td style="width: 50px;"><p data-placement="top"
+										data-toggle="tooltip" title="Delete">
+										<button id="deletePointOfSaleFromList"
+											class="btn btn-danger btn-s deletePointOfSaleFromList"
+											data-title="Delete" data-toggle="modal" data-target="#delete"
+											th:attr="data-id=${pos.id}">
+											<span class="fa  fa-trash"></span>
+										</button>
+									</p></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- delete modal -->
+			<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+				aria-labelledby="edit" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-body">
+							<input type="hidden" name="modalPointOfSaleId"
+								id="modalPointOfSaleId" value="" />
+						</div>
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">
+								<span class="fa fa-times" aria-hidden="true"></span>
+							</button>
+							<h4 class="modal-title custom_align" id="Heading">Delete
+								pointOfSale</h4>
+						</div>
+						<div class="modal-body">
+
+							<div class="alert alert-danger">
+								<span class="glyphicon glyphicon-warning-sign"></span>
+								<p>Do you really want to delete this pointOfSale</p>
+							</div>
+
+						</div>
+						<div class="modal-footer ">
+							<button type="button" class="btn btn-primary deletePointOfSale">
+								<span class="fa fa-check"></span> 
+								<p th:text="#{yesText}"></p>
+							</button>
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">
+								<span class="fa fa-times"></span> 
+								<p th:text="#{noText}"></p>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+	</div>
+</body>
+<footer th:replace="master :: app_footer"></footer>
+<script type="text/javascript" src="js/plugins/bootstrap-notify.min.js"></script>
+<script type="text/javascript" src="js/plugins/sweetalert.min.js"></script>
+<script type="text/javascript">
+	var getUrl = window.location;
+	var url = getUrl.protocol + "//" + getUrl.host;
+	$(".deletePointOfSaleFromList").click(function() {
+		$("#modalPointOfSaleId").val($(this).attr("data-id"))
+	});
+	$(".deletePointOfSale").click(function() {
+		event.preventDefault();
+		deletePointOfSale();
+	});
+	$('#pointOfSaleTable').DataTable();
+</script>
+</html>
